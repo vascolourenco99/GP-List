@@ -1,6 +1,12 @@
+<!-- YourParentComponent.vue -->
+
 <template>
-  <div class=" flex row justify-center">
-    <t-table :headers="['Schedule Date', 'State', 'Amount', 'Project ID']" :data="tableData"></t-table>
+  <div class="flex row justify-center">
+    <t-table
+      :headers="['Schedule Date', 'State', 'Amount', 'Project ID']"
+      :data="tableData"
+      :items-per-page="10" 
+    />
   </div>
 </template>
 
