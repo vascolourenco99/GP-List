@@ -3,45 +3,65 @@
     <table :class="classes.table">
       <thead :class="classes.thead">
         <tr :class="classes.theadTr">
-          <th v-for="(header, index) in headers" :key="index"
-            :class="[classes.theadTh, 'text-center', 'text-custom-color']">
+          <th
+            v-for="(header, index) in headers"
+            :key="index"
+            :class="[classes.theadTh, 'text-center', 'text-custom-color']"
+          >
             {{ header }}
           </th>
         </tr>
       </thead>
       <tbody :class="classes.tbody">
-        <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" :class="[
-          classes.tr,
-          rowIndex % 2 === 0 ? 'bg-gray-100' : '',
-          'text-custom-color',
-        ]">
-          <td v-for="(item, colIndex) in row" :key="colIndex" :class="[classes.td, 'text-center', changeColor(item)]">
+        <tr
+          v-for="(row, rowIndex) in paginatedData"
+          :key="rowIndex"
+          :class="[
+            classes.tr,
+            rowIndex % 2 === 0 ? 'bg-gray-100' : '',
+            'text-custom-color',
+          ]"
+        >
+          <td
+            v-for="(item, colIndex) in row"
+            :key="colIndex"
+            :class="[classes.td, 'text-center', changeColor(item)]"
+          >
             {{ item }}
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="flex justify-between mt-4">
-      <button
-        class="px-4 py-2  rounded text-custom-color font-bold button-color"
-        :disabled="currentPage === 1"
-        @click="prevPage"
-      >
-        Previous
-      </button>
-      <t-pagination
-        :total-items="data.length"
-        :current-page="currentPage"
-        :items-per-page="itemsPerPage"
-        @page-change="handlePageChange"
-      />
-      <button
-        class="px-4 py-2 rounded text-custom-color font-bold button-color"
-        :disabled="currentPage === totalPages"
-        @click="nextPage"
-      >
-        Next
-      </button>
+    <t-pagination
+      :total-items="data.length"
+      :current-page="currentPage"
+      :items-per-page="itemsPerPage"
+      @page-change="handlePageChange"
+    />
+    <div class="flex row justify-between t-4">
+      <div>
+        <button
+          class="px-4 py-2 rounded text-custom-color font-bold button-color"
+          :disabled="currentPage === 1"
+          @click="prevPage"
+        >
+          Previous
+        </button>
+      </div>
+      <div>
+        <span class="mx-4 text-custom-color"
+          >{{ currentPage }} / {{ totalPages }}</span
+        >
+      </div>
+      <div>
+        <button
+          class="px-4 py-2 rounded text-custom-color font-bold button-color"
+          :disabled="currentPage === totalPages"
+          @click="nextPage"
+        >
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -102,7 +122,7 @@ export default {
         return "";
       }
     },
-    handlePageChange(page : number) {
+    handlePageChange(page: number) {
       this.currentPage = page;
     },
     prevPage() {
@@ -120,9 +140,8 @@ export default {
 </script>
 
 <style scoped>
-
 .button-color {
-  background-color: #FFC84B;
+  background-color: #ffc84b;
 }
 
 .button-color:hover {
@@ -132,5 +151,7 @@ export default {
 .text-custom-color {
   color: #154b64;
   font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
 }
 </style>
