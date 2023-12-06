@@ -1,5 +1,3 @@
-<!-- YourParentComponent.vue -->
-
 <template>
   <div class="flex row justify-center">
     <t-table
