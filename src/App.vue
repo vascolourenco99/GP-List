@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <t-table :headers="['Name', 'Email', 'Age', 'Sales']" :data="tableData"></t-table>
+  <div class="flex items-center justify-center mt-10">
+    <t-table :headers="['Date', 'State', 'Amout', 'Project ID']" :data="amortizations">
+    
+    </t-table>
   </div>
 </template>
 
 <script lang="ts">
 import TTable from '../src/components/TTable.vue';
+import { amortizations } from '../db/amortizations.ts';
 
 export default {
   components: {
@@ -13,15 +16,11 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        ['Alfonso Bribiesca', 'alfonso@vexilo.com', '31', '$9,999.00'],
-        ['Saida Redondo', 'saida@gmail.com', '27', '$124.00'],
-      ],
+      amortizations: amortizations
     };
   },
 };
 </script>
 
 <style scoped>
-/* Add Tailwind CSS styles here if needed */
 </style>
