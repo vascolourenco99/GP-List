@@ -6,7 +6,7 @@
           <th
             v-for="(header, index) in headers"
             :key="index"
-            :class="[classes.theadTh, 'text-center', 'text-custom-color']"
+            :class="[classes.theadTh, 'text-center', 'custom-th']"
           >
             {{ header }}
           </th>
@@ -25,7 +25,12 @@
           <td
             v-for="(item, colIndex) in row"
             :key="colIndex"
-            :class="[classes.td, 'text-center', changeColor(item)]"
+            :class="[
+              classes.td,
+              'text-center',
+              changeColor(item),
+              item === 'pending' || item === 'paid' ? 'uppercase' : '',
+            ]"
           >
             {{ item }}
           </td>
@@ -140,6 +145,10 @@ export default {
 </script>
 
 <style scoped>
+.custom-th {
+  background-color: #154b64;
+  color: white;
+}
 .button-color {
   background-color: #ffc84b;
 }
@@ -153,5 +162,9 @@ export default {
   font-family: "Poppins", sans-serif;
   font-size: 17px;
   font-weight: 700;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 </style>

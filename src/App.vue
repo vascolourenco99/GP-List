@@ -1,7 +1,7 @@
 <template>
   <div class="flex row justify-center">
     <t-table
-      :headers="['Schedule Date', 'State', 'Amount', 'Project ID']"
+      :headers="['Date', 'Hour' , 'Project ID', 'State', 'Amount']"
       :data="tableData"
       :items-per-page="10" 
     />
@@ -10,7 +10,8 @@
 
 <script lang="ts">
 import TTable from '../src/components/TTable.vue';
-import { amortizations } from '../db/amortizations.ts'
+import { amortizations } from './db/amortizations.ts'
+import { transformAmortizations } from './helpers/transformAmortizations.ts';
 
 export default {
   components: {
@@ -18,7 +19,7 @@ export default {
   },
   data() {
     return {
-      tableData: amortizations,
+      tableData: transformAmortizations(amortizations),
     };
   },
 };
@@ -26,4 +27,4 @@ export default {
 
 <style scoped>
 /* Add Tailwind CSS styles here if needed */
-</style>
+</style>./db/amortizations.ts

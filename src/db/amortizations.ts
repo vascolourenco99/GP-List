@@ -1,4 +1,4 @@
-import { Amortization } from "../src/types";
+import { Amortization } from "../types";
 
 export const amortizations: Amortization[] = [
   {
