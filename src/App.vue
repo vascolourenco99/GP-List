@@ -59,12 +59,17 @@
 </template>
 
 <script lang="ts">
-import TTable from "../src/components/TTable.vue";
-import { amortizations } from "./db/amortizations.ts";
-import { transformAmortizations } from "./helpers/transformAmortizations.ts";
+// external libraries
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+
+// component
+import TTable from "../src/components/TTable.vue";
+
+// functions
+import { amortizations } from "./db/amortizations.ts";
+import { transformAmortizations, swapElement } from "./helpers";
 
 library.add(fas);
 
@@ -92,9 +97,7 @@ export default {
               const date2 = new Date(this.$data.tableData[j].day);
 
               if (date1 < date2) {
-                const temp = this.$data.tableData[i];
-                this.$data.tableData[i] = this.$data.tableData[j];
-                this.$data.tableData[j] = temp;
+                swapElement(this.$data.tableData, i, j);
               }
             }
           }
@@ -107,9 +110,7 @@ export default {
               if (
                 this.$data.tableData[i].state < this.$data.tableData[j].state
               ) {
-                const temp = this.$data.tableData[i];
-                this.$data.tableData[i] = this.$data.tableData[j];
-                this.$data.tableData[j] = temp;
+                swapElement(this.$data.tableData, i, j);
               }
             }
           }
@@ -123,9 +124,7 @@ export default {
                 this.$data.tableData[i].project <
                 this.$data.tableData[j].project
               ) {
-                const temp = this.$data.tableData[i];
-                this.$data.tableData[i] = this.$data.tableData[j];
-                this.$data.tableData[j] = temp;
+                swapElement(this.$data.tableData, i, j);
               }
             }
           }
@@ -138,9 +137,7 @@ export default {
               if (
                 this.$data.tableData[i].amount < this.$data.tableData[j].amount
               ) {
-                const temp = this.$data.tableData[i];
-                this.$data.tableData[i] = this.$data.tableData[j];
-                this.$data.tableData[j] = temp;
+                swapElement(this.$data.tableData, i, j);
               }
             }
           }
