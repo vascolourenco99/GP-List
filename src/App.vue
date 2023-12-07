@@ -147,6 +147,7 @@ export default {
           break;
         case "Default":
           this.activeButton = criteria;
+          this.activeButtonReverse = '';
           this.$data.tableData = transformAmortizations(amortizations);
           break;
       }
@@ -215,5 +216,6 @@ export default {
   transform: translateY(4px);
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: #ffc84b;
+  border: none;
 }
 </style>
