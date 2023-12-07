@@ -3,7 +3,7 @@
     <div>
       <div class="flex">
         <div class="flex flex-col justify-center">
-          <h3 class="text-2xl font-h3 mr-2 text-center">Sort by:</h3>
+          <h3 class="font-h3 mr-2 text-center">Sort by:</h3>
         </div>
         <button
           class="button-sort px-4 py-2 mr-2 rounded"
@@ -24,7 +24,7 @@
           @click="sort('ProjectID')"
           :class="{ 'active-button': activeButton === 'ProjectID' }"
         >
-          Project ID
+          ID
         </button>
         <button
           class="button-sort px-4 py-2 mr-2 rounded"
@@ -34,11 +34,19 @@
           Amount
         </button>
         <button
-          class="button-default px-4 py-2 rounded"
+          class="button-default mr-2 px-4 py-2 rounded"
           @click="sort('Default')"
           :class="{ 'active-button': activeButton === 'Default' }"
         >
           None
+        </button>
+        <div class="vl"></div>
+        <button
+          class="button-option px-4 py-2 ml-2 rounded"
+          @click="reverse('Active')"
+          :class="{ 'active-button': activeButtonReverse === 'Active' }"
+        >
+          <font-awesome-icon :icon="['fas', 'arrow-right-arrow-left']" />
         </button>
       </div>
       <t-table
@@ -54,15 +62,22 @@
 import TTable from "../src/components/TTable.vue";
 import { amortizations } from "./db/amortizations.ts";
 import { transformAmortizations } from "./helpers/transformAmortizations.ts";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+
+library.add(fas);
 
 export default {
   components: {
     TTable,
+    FontAwesomeIcon,
   },
   data() {
     return {
       tableData: transformAmortizations(amortizations),
       activeButton: "Default",
+      activeButtonReverse: '',
     };
   },
   methods: {
@@ -70,6 +85,7 @@ export default {
       switch (criteria) {
         case "Date":
           this.activeButton = criteria;
+          this.activeButtonReverse = '';
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               const date1 = new Date(this.$data.tableData[i].day);
@@ -85,6 +101,7 @@ export default {
           break;
         case "State":
           this.activeButton = criteria;
+          this.activeButtonReverse = '';
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -99,6 +116,7 @@ export default {
           break;
         case "ProjectID":
           this.activeButton = criteria;
+          this.activeButtonReverse = '';
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -114,6 +132,7 @@ export default {
           break;
         case "Amount":
           this.activeButton = criteria;
+          this.activeButtonReverse = '';
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -132,21 +151,49 @@ export default {
           break;
       }
     },
+    reverse(active: string) {
+      if(this.activeButton === "Default") return;
+
+      if(this.activeButtonReverse === active)
+      {
+        this.activeButtonReverse = '';
+        this.$data.tableData.reverse();
+      } else {
+      this.activeButtonReverse = active;
+      this.$data.tableData.reverse();
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+.vl {
+  border-left: 2px solid rgb(197, 197, 197);
+  height: 43px;
+  margin-right: 4px;
+}
+
+.button-option {
+  cursor: pointer;
+  border: 1px solid #154b64;
+  background-color: white;
+  color: #154b64;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
 .font-h3 {
   font-family: "Poppins", sans-serif;
-  font-size: 24px;
+  font-size: 14px;
   font-weight: 700;
   color: #154b64;
 }
 .button-sort,
 .button-default {
   cursor: pointer;
-  border: 1px solid  #154b64;
+  border: 1px solid #154b64;
   background-color: white;
   color: #154b64;
   font-family: "Poppins", sans-serif;
@@ -155,11 +202,13 @@ export default {
 }
 
 .button-sort:hover,
+.button-option,
 .button-default:hover {
   background-color: #f8f8f8;
 }
 
 .button-sort.active-button,
+.button-option.active-button,
 .button-default.active-button,
 .button-default:active,
 .button-sort:active {
