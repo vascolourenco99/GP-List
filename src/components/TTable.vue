@@ -53,9 +53,9 @@
           Previous
         </button>
       </div>
-      <div>
-        <span class="mx-4 text-custom-color"
-          >{{ currentPage }} / {{ totalPages }}</span
+      <div class="flex flex-col justify-center">
+        <div class="mx-4 text-custom-color"
+          >{{ currentPage }} / {{ totalPages }}</div
         >
       </div>
       <div>

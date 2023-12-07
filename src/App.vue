@@ -108,7 +108,7 @@ export default {
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
-                this.$data.tableData[i].state < this.$data.tableData[j].state
+                this.$data.tableData[i].state > this.$data.tableData[j].state
               ) {
                 swapElement(this.$data.tableData, i, j);
               }
@@ -195,7 +195,7 @@ export default {
   background-color: white;
   color: #154b64;
   font-family: "Poppins", sans-serif;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -210,8 +210,8 @@ export default {
 .button-default.active-button,
 .button-default:active,
 .button-sort:active {
-  transform: translateY(4px);
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transform: translateY(1px);
+  
   background-color: #ffc84b;
   border: none;
 }
