@@ -1,59 +1,78 @@
 <template>
-  <div class="flex justify-center mt-4">
-    <div>
-      <div class="flex">
-        <div class="flex flex-col justify-center">
-          <h3 class="font-h3 mr-2 text-center">Sort by:</h3>
+  <div class="container-table">
+    <div class="flex justify-center">
+      <div>
+        <div class="flex">
+          <div class="flex flex-col justify-center">
+            <h3 class="font-h3 mr-2 text-center">Sort by:</h3>
+          </div>
+          <button
+            class="button-sort px-4 py-2 mr-2 rounded"
+            @click="sort('Date')"
+            :class="{
+              'active-button': activeButton === 'Date',
+              noClick: activeButton === 'Date',
+            }"
+          >
+            Date
+          </button>
+          <button
+            class="button-sort px-4 py-2 mr-2 rounded"
+            @click="sort('State')"
+            :class="{
+              'active-button': activeButton === 'State',
+              noClick: activeButton === 'State',
+            }"
+          >
+            State
+          </button>
+          <button
+            class="button-sort px-4 py-2 mr-2 rounded"
+            @click="sort('ProjectID')"
+            :class="{
+              'active-button': activeButton === 'ProjectID',
+              noClick: activeButton === 'ProjectID',
+            }"
+          >
+            ID
+          </button>
+          <button
+            class="button-sort px-4 py-2 mr-2 rounded"
+            @click="sort('Amount')"
+            :class="{
+              'active-button': activeButton === 'Amount',
+              noClick: activeButton === 'Amount',
+            }"
+          >
+            Amount
+          </button>
+          <button
+            class="button-default mr-2 px-4 py-2 rounded"
+            @click="sort('Default')"
+            :class="{ 'active-button': activeButton === 'Default' }"
+          >
+            None
+          </button>
+          <div>
+            <div class="vl"></div>
+          </div>
+          <button
+            class="button-option px-4 py-2 ml-2 rounded"
+            @click="reverse('Active')"
+            :class="{
+              'active-button': activeButtonReverse === 'Active',
+              noClick: activeButton === 'Default',
+            }"
+          >
+            <font-awesome-icon :icon="['fas', 'arrow-right-arrow-left']" />
+          </button>
         </div>
-        <button
-          class="button-sort px-4 py-2 mr-2 rounded"
-          @click="sort('Date')"
-          :class="{ 'active-button': activeButton === 'Date' }"
-        >
-          Date
-        </button>
-        <button
-          class="button-sort px-4 py-2 mr-2 rounded"
-          @click="sort('State')"
-          :class="{ 'active-button': activeButton === 'State' }"
-        >
-          State
-        </button>
-        <button
-          class="button-sort px-4 py-2 mr-2 rounded"
-          @click="sort('ProjectID')"
-          :class="{ 'active-button': activeButton === 'ProjectID' }"
-        >
-          ID
-        </button>
-        <button
-          class="button-sort px-4 py-2 mr-2 rounded"
-          @click="sort('Amount')"
-          :class="{ 'active-button': activeButton === 'Amount' }"
-        >
-          Amount
-        </button>
-        <button
-          class="button-default mr-2 px-4 py-2 rounded"
-          @click="sort('Default')"
-          :class="{ 'active-button': activeButton === 'Default' }"
-        >
-          None
-        </button>
-        <div class="vl"></div>
-        <button
-          class="button-option px-4 py-2 ml-2 rounded"
-          @click="reverse('Active')"
-          :class="{ 'active-button': activeButtonReverse === 'Active' }"
-        >
-          <font-awesome-icon :icon="['fas', 'arrow-right-arrow-left']" />
-        </button>
+        <t-table
+          :headers="['Date', 'Hour', 'Project ID', 'State', 'Amount']"
+          :data="tableData"
+          :items-per-page="10"
+        />
       </div>
-      <t-table
-        :headers="['Date', 'Hour', 'Project ID', 'State', 'Amount']"
-        :data="tableData"
-        :items-per-page="10"
-      />
     </div>
   </div>
 </template>
@@ -82,7 +101,7 @@ export default {
     return {
       tableData: transformAmortizations(amortizations),
       activeButton: "Default",
-      activeButtonReverse: '',
+      activeButtonReverse: "",
     };
   },
   methods: {
@@ -90,7 +109,7 @@ export default {
       switch (criteria) {
         case "Date":
           this.activeButton = criteria;
-          this.activeButtonReverse = '';
+          this.activeButtonReverse = "";
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               const date1 = new Date(this.$data.tableData[i].day);
@@ -104,7 +123,7 @@ export default {
           break;
         case "State":
           this.activeButton = criteria;
-          this.activeButtonReverse = '';
+          this.activeButtonReverse = "";
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -117,7 +136,7 @@ export default {
           break;
         case "ProjectID":
           this.activeButton = criteria;
-          this.activeButtonReverse = '';
+          this.activeButtonReverse = "";
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -131,7 +150,7 @@ export default {
           break;
         case "Amount":
           this.activeButton = criteria;
-          this.activeButtonReverse = '';
+          this.activeButtonReverse = "";
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -144,21 +163,20 @@ export default {
           break;
         case "Default":
           this.activeButton = criteria;
-          this.activeButtonReverse = '';
+          this.activeButtonReverse = "";
           this.$data.tableData = transformAmortizations(amortizations);
           break;
       }
     },
     reverse(active: string) {
-      if(this.activeButton === "Default") return;
+      if (this.activeButton === "Default") return;
 
-      if(this.activeButtonReverse === active)
-      {
-        this.activeButtonReverse = '';
+      if (this.activeButtonReverse === active) {
+        this.activeButtonReverse = "";
         this.$data.tableData.reverse();
       } else {
-      this.activeButtonReverse = active;
-      this.$data.tableData.reverse();
+        this.activeButtonReverse = active;
+        this.$data.tableData.reverse();
       }
     },
   },
@@ -166,10 +184,19 @@ export default {
 </script>
 
 <style scoped>
+
+.container-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.noClick {
+  pointer-events: none;
+}
 .vl {
   border-left: 2px solid rgb(197, 197, 197);
   height: 43px;
-  margin-right: 4px;
 }
 
 .button-option {
@@ -211,7 +238,7 @@ export default {
 .button-default:active,
 .button-sort:active {
   transform: translateY(1px);
-  
+
   background-color: #ffc84b;
   border: none;
 }

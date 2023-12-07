@@ -46,7 +46,12 @@
     <div class="flex row justify-between t-4">
       <div>
         <button
-          class="px-4 py-2 rounded text-custom-color font-bold button-color"
+          class="px-4 py-2 rounded text-custom-color font-bold"
+          :class="{
+            'bg-gray-300': currentPage === 1,
+            'button-color': currentPage !== 1,
+            'text-deactivated-color': currentPage === 1,
+          }"
           :disabled="currentPage === 1"
           @click="prevPage"
         >
@@ -54,13 +59,18 @@
         </button>
       </div>
       <div class="flex flex-col justify-center">
-        <div class="mx-4 text-custom-color"
-          >{{ currentPage }} / {{ totalPages }}</div
-        >
+        <div class="mx-4 text-custom-color">
+          {{ currentPage }} / {{ totalPages }}
+        </div>
       </div>
       <div>
         <button
-          class="px-4 py-2 rounded text-custom-color font-bold button-color"
+          class="px-4 py-2 rounded text-custom-color font-bold"
+          :class="{
+            'button-color': currentPage !== totalPages,
+            'bg-gray-300': currentPage === totalPages,
+            'text-deactivated-color': currentPage === totalPages,
+          }"
           :disabled="currentPage === totalPages"
           @click="nextPage"
         >
@@ -96,7 +106,7 @@ export default {
     classes() {
       return {
         table:
-          "min-w-full divide-y divide-gray-100 shadow-sm border-gray-200 border mb-4",
+          "min-w-full divide-y divide-gray-100 shadow-sm border-gray-200 border mb-4 rounded",
         thead: "",
         theadTr: "",
         theadTh: "px-3 py-2 font-semibold text-left border-b",
@@ -159,6 +169,13 @@ export default {
 }
 .text-custom-color {
   color: #154b64;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.text-deactivated-color {
+  color: #727272;
   font-family: "Poppins", sans-serif;
   font-size: 17px;
   font-weight: 700;
