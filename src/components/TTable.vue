@@ -151,7 +151,6 @@ export default {
 }
 .button-color {
   background-color: #ffc84b;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .button-color:hover {

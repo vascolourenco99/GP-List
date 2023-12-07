@@ -5,14 +5,32 @@
         <div class="flex flex-col justify-center">
           <h3 class="text-2xl font-h3 mr-2 text-center">Sort by:</h3>
         </div>
-        <button class="button-sort px-4 py-2 mr-2 rounded" @click="sort('Date') ">
+        <button
+          class="button-sort px-4 py-2 mr-2 rounded"
+          @click="sort('Date')"
+        >
           Date
         </button>
-        <button class="button-sort px-4 py-2 mr-2 rounded" @click="sort('State')">
+        <button
+          class="button-sort px-4 py-2 mr-2 rounded"
+          @click="sort('State')"
+        >
           State
         </button>
-        <button class="button-sort px-4 py-2 rounded" @click="sort('ProjectID')">
+        <button
+          class="button-sort px-4 py-2 mr-2 rounded"
+          @click="sort('ProjectID')"
+        >
           Project ID
+        </button>
+        <button
+          class="button-sort px-4 py-2 mr-2 rounded"
+          @click="sort('Amount')"
+        >
+          Amount
+        </button>
+        <button class="button-default px-4 py-2 rounded" @click="sort('Default')">
+          Reset
         </button>
       </div>
       <t-table
@@ -39,18 +57,15 @@ export default {
     };
   },
   methods: {
-    sort(criteria : string){
+    sort(criteria: string) {
       switch (criteria) {
-        case 'Date':
-          for(let i = 0; i < this.$data.tableData.length; i++)
-          {
-            for(let j = 0; j < this.$data.tableData.length; j++)
-            {
+        case "Date":
+          for (let i = 0; i < this.$data.tableData.length; i++) {
+            for (let j = 0; j < this.$data.tableData.length; j++) {
               const date1 = new Date(this.$data.tableData[i].day);
               const date2 = new Date(this.$data.tableData[j].day);
 
-              if(date1 < date2)
-              {
+              if (date1 < date2) {
                 const temp = this.$data.tableData[i];
                 this.$data.tableData[i] = this.$data.tableData[j];
                 this.$data.tableData[j] = temp;
@@ -58,13 +73,12 @@ export default {
             }
           }
           break;
-        case 'State':
-          for(let i = 0; i < this.$data.tableData.length; i++)
-          {
-            for(let j = 0; j < this.$data.tableData.length; j++)
-            {
-              if(this.$data.tableData[i].state < this.$data.tableData[j].state)
-              {
+        case "State":
+          for (let i = 0; i < this.$data.tableData.length; i++) {
+            for (let j = 0; j < this.$data.tableData.length; j++) {
+              if (
+                this.$data.tableData[i].state < this.$data.tableData[j].state
+              ) {
                 const temp = this.$data.tableData[i];
                 this.$data.tableData[i] = this.$data.tableData[j];
                 this.$data.tableData[j] = temp;
@@ -72,19 +86,35 @@ export default {
             }
           }
           break;
-        case 'ProjectID':
-          for(let i = 0; i < this.$data.tableData.length; i++)
-          {
-            for(let j = 0; j < this.$data.tableData.length; j++)
-            {
-              if(this.$data.tableData[i].project < this.$data.tableData[j].project)
-              {
+        case "ProjectID":
+          for (let i = 0; i < this.$data.tableData.length; i++) {
+            for (let j = 0; j < this.$data.tableData.length; j++) {
+              if (
+                this.$data.tableData[i].project <
+                this.$data.tableData[j].project
+              ) {
                 const temp = this.$data.tableData[i];
                 this.$data.tableData[i] = this.$data.tableData[j];
                 this.$data.tableData[j] = temp;
               }
             }
           }
+          break;
+        case "Amount":
+          for (let i = 0; i < this.$data.tableData.length; i++) {
+            for (let j = 0; j < this.$data.tableData.length; j++) {
+              if (
+                this.$data.tableData[i].amount < this.$data.tableData[j].amount
+              ) {
+                const temp = this.$data.tableData[i];
+                this.$data.tableData[i] = this.$data.tableData[j];
+                this.$data.tableData[j] = temp;
+              }
+            }
+          }
+          break;
+        case "Default":
+          this.$data.tableData = transformAmortizations(amortizations);
           break;
       }
     },
@@ -107,14 +137,31 @@ export default {
   font-family: "Poppins", sans-serif;
   font-size: 17px;
   font-weight: 700;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .button-sort:hover {
-  background-color: #ffc84b;
+  background-color: #f8d177;
 }
 
 .button-sort:active {
+  transform: translateY(4px);
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.button-default {
+  cursor: pointer;
+  border: none;
+  background-color: #f0e2bd;
+  color: #154b64;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.button-default:hover {
+  background-color: #f0e2bd;
+}
+
+.button-default:active {
   transform: translateY(4px);
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
