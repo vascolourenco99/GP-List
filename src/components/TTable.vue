@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-12">
+  <div class="mt-6">
     <table :class="classes.table">
       <thead :class="classes.thead">
         <tr :class="classes.theadTr">
@@ -151,6 +151,7 @@ export default {
 }
 .button-color {
   background-color: #ffc84b;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .button-color:hover {
