@@ -8,29 +8,37 @@
         <button
           class="button-sort px-4 py-2 mr-2 rounded"
           @click="sort('Date')"
+          :class="{ 'active-button': activeButton === 'Date' }"
         >
           Date
         </button>
         <button
           class="button-sort px-4 py-2 mr-2 rounded"
           @click="sort('State')"
+          :class="{ 'active-button': activeButton === 'State' }"
         >
           State
         </button>
         <button
           class="button-sort px-4 py-2 mr-2 rounded"
           @click="sort('ProjectID')"
+          :class="{ 'active-button': activeButton === 'ProjectID' }"
         >
           Project ID
         </button>
         <button
           class="button-sort px-4 py-2 mr-2 rounded"
           @click="sort('Amount')"
+          :class="{ 'active-button': activeButton === 'Amount' }"
         >
           Amount
         </button>
-        <button class="button-default px-4 py-2 rounded" @click="sort('Default')">
-          Reset
+        <button
+          class="button-default px-4 py-2 rounded"
+          @click="sort('Default')"
+          :class="{ 'active-button': activeButton === 'Default' }"
+        >
+          None
         </button>
       </div>
       <t-table
@@ -54,12 +62,14 @@ export default {
   data() {
     return {
       tableData: transformAmortizations(amortizations),
+      activeButton: "Default",
     };
   },
   methods: {
     sort(criteria: string) {
       switch (criteria) {
         case "Date":
+          this.activeButton = criteria;
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               const date1 = new Date(this.$data.tableData[i].day);
@@ -74,6 +84,7 @@ export default {
           }
           break;
         case "State":
+          this.activeButton = criteria;
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -87,6 +98,7 @@ export default {
           }
           break;
         case "ProjectID":
+          this.activeButton = criteria;
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -101,6 +113,7 @@ export default {
           }
           break;
         case "Amount":
+          this.activeButton = criteria;
           for (let i = 0; i < this.$data.tableData.length; i++) {
             for (let j = 0; j < this.$data.tableData.length; j++) {
               if (
@@ -114,6 +127,7 @@ export default {
           }
           break;
         case "Default":
+          this.activeButton = criteria;
           this.$data.tableData = transformAmortizations(amortizations);
           break;
       }
@@ -129,40 +143,28 @@ export default {
   font-weight: 700;
   color: #154b64;
 }
-.button-sort {
+.button-sort,
+.button-default {
   cursor: pointer;
-  border: none;
-  background-color: #ffc84b;
+  border: 1px solid  #154b64;
+  background-color: white;
   color: #154b64;
   font-family: "Poppins", sans-serif;
   font-size: 17px;
   font-weight: 700;
 }
 
-.button-sort:hover {
-  background-color: #f8d177;
+.button-sort:hover,
+.button-default:hover {
+  background-color: #f8f8f8;
 }
 
+.button-sort.active-button,
+.button-default.active-button,
+.button-default:active,
 .button-sort:active {
   transform: translateY(4px);
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.button-default {
-  cursor: pointer;
-  border: none;
-  background-color: #f0e2bd;
-  color: #154b64;
-  font-family: "Poppins", sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-}
-
-.button-default:hover {
-  background-color: #f0e2bd;
-}
-
-.button-default:active {
-  transform: translateY(4px);
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #ffc84b;
 }
 </style>
