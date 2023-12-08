@@ -16,9 +16,7 @@ This project is a Vue.js application designed to provide a user-friendly interfa
 1. Install Vue.js dependencies: `npm install`
 2. Run the Vue.js development server: `npm run dev`
 
-## Acknowledgements
-
-- Mention any external libraries, tools, or resources you used.
+## Docs
 
 - https://devdocs.io/vue~3/
 - https://tailwindcss.com/docs/installation 
