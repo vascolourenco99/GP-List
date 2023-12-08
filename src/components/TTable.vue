@@ -1,3 +1,9 @@
+<!--
+  This component defines a dynamic table with pagination functionality. 
+  It takes data, headers, and itemsPerPage as props to display a table 
+  with specified headers and paginates the data based on the itemsPerPage property. 
+-->
+
 <template>
   <div class="mt-6">
     <table :class="classes.table">

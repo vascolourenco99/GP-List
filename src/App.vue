@@ -1,3 +1,10 @@
+<!--
+  This component represents a sortable table with various data columns. 
+  It includes functionality to sort the table based on
+  different criteria such as Date, State, Project ID, and Amount. 
+  Users can click on buttons to sort the table by specific criteria, 
+  and an additional option allows reversing the sorting order.
+-->
 <template>
   <div class="container-table">
     <div class="flex justify-center">
@@ -184,7 +191,6 @@ export default {
 </script>
 
 <style scoped>
-
 .container-table {
   display: flex;
   justify-content: center;
