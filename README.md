@@ -13,10 +13,8 @@ This project is a Vue.js application designed to provide a user-friendly interfa
 
 ## Usage
 
-1. Navigate to the `src/` directory.
-2. Install Vue.js dependencies: `npm install`
-3. Run the Vue.js development server: `npm run dev`
-4. Open your browser and go to the provided URL.
+1. Install Vue.js dependencies: `npm install`
+2. Run the Vue.js development server: `npm run dev`
 
 ## Acknowledgements
 
