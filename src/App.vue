@@ -14,44 +14,16 @@
             <h3 class="font-h3 mr-2 text-center">Sort by:</h3>
           </div>
           <button
+            v-for="column in ['Date', 'State', 'ID', 'Amount']"
+            :key="column"
             class="button-sort px-4 py-2 mr-2 rounded"
-            @click="sort('Date')"
+            @click="sort(column)"
             :class="{
-              'active-button': activeButton === 'Date',
-              noClick: activeButton === 'Date',
+              'active-button': activeButton === column,
+              noClick: activeButton === column,
             }"
           >
-            Date
-          </button>
-          <button
-            class="button-sort px-4 py-2 mr-2 rounded"
-            @click="sort('State')"
-            :class="{
-              'active-button': activeButton === 'State',
-              noClick: activeButton === 'State',
-            }"
-          >
-            State
-          </button>
-          <button
-            class="button-sort px-4 py-2 mr-2 rounded"
-            @click="sort('ProjectID')"
-            :class="{
-              'active-button': activeButton === 'ProjectID',
-              noClick: activeButton === 'ProjectID',
-            }"
-          >
-            ID
-          </button>
-          <button
-            class="button-sort px-4 py-2 mr-2 rounded"
-            @click="sort('Amount')"
-            :class="{
-              'active-button': activeButton === 'Amount',
-              noClick: activeButton === 'Amount',
-            }"
-          >
-            Amount
+            {{ column }}
           </button>
           <button
             class="button-default mr-2 px-4 py-2 rounded"
@@ -95,7 +67,8 @@ import TTable from "../src/components/TTable.vue";
 
 // functions
 import { amortizations } from "./db/amortizations.ts";
-import { transformAmortizations, swapElement } from "./helpers";
+import { transformAmortizations } from "./helpers";
+import { Amortization } from "./types";
 
 library.add(fas);
 
@@ -113,67 +86,30 @@ export default {
   },
   methods: {
     sort(criteria: string) {
-      switch (criteria) {
-        case "Date":
-          this.activeButton = criteria;
-          this.activeButtonReverse = "";
-          for (let i = 0; i < this.$data.tableData.length; i++) {
-            for (let j = 0; j < this.$data.tableData.length; j++) {
-              const date1 = new Date(this.$data.tableData[i].day);
-              const date2 = new Date(this.$data.tableData[j].day);
-
-              if (date1 < date2) {
-                swapElement(this.$data.tableData, i, j);
-              }
-            }
-          }
-          break;
-        case "State":
-          this.activeButton = criteria;
-          this.activeButtonReverse = "";
-          for (let i = 0; i < this.$data.tableData.length; i++) {
-            for (let j = 0; j < this.$data.tableData.length; j++) {
-              if (
-                this.$data.tableData[i].state > this.$data.tableData[j].state
-              ) {
-                swapElement(this.$data.tableData, i, j);
-              }
-            }
-          }
-          break;
-        case "ProjectID":
-          this.activeButton = criteria;
-          this.activeButtonReverse = "";
-          for (let i = 0; i < this.$data.tableData.length; i++) {
-            for (let j = 0; j < this.$data.tableData.length; j++) {
-              if (
-                this.$data.tableData[i].project <
-                this.$data.tableData[j].project
-              ) {
-                swapElement(this.$data.tableData, i, j);
-              }
-            }
-          }
-          break;
-        case "Amount":
-          this.activeButton = criteria;
-          this.activeButtonReverse = "";
-          for (let i = 0; i < this.$data.tableData.length; i++) {
-            for (let j = 0; j < this.$data.tableData.length; j++) {
-              if (
-                this.$data.tableData[i].amount < this.$data.tableData[j].amount
-              ) {
-                swapElement(this.$data.tableData, i, j);
-              }
-            }
-          }
-          break;
-        case "Default":
-          this.activeButton = criteria;
-          this.activeButtonReverse = "";
-          this.$data.tableData = transformAmortizations(amortizations);
-          break;
+      if (criteria === "Default") {
+        this.activeButton = criteria;
+        this.activeButtonReverse = "";
+        this.$data.tableData = transformAmortizations(amortizations);
+      } else {
+        this.activeButton = criteria;
+        this.activeButtonReverse = "";
+        this.$data.tableData = this.sortData(criteria, this.$data.tableData);
       }
+    },
+
+    sortData(criteria: string, data: Array<Amortization>) {
+      return data.sort((a, b) => {
+        if (criteria === "Date") {
+          return new Date(a.day).getTime() - new Date(b.day).getTime();
+        } else if (criteria === "State") {
+          return b.state.localeCompare(a.state);
+        } else if (criteria === "ID") {
+          return a.project - b.project;
+        } else if (criteria === "Amount") {
+          return a.amount - b.amount;
+        }
+        return 0;
+      });
     },
     reverse(active: string) {
       if (this.activeButton === "Default") return;
