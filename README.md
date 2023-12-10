@@ -6,6 +6,7 @@ This project is a Vue.js application designed to provide a user-friendly interfa
 
 - `src/`
   - `components/TTable.vue`: Reusable table component for displaying data with pagination.
+  - `components/ButtonSort.vue.vue`
   - `db/amortizations.ts`: Sample data array for amortizations.
 - `App.vue`: Main component for displaying the amortization list and handling sorting and pagination.
 - `helpers.ts`: Utility functions for transforming data and swapping elements.
