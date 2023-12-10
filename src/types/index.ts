@@ -1,5 +1,5 @@
-import { Amortization } from './amortizations.ts';
+import { Amortization, TransformedAmortization } from './amortizations.ts';
 
 export type {
-    Amortization
+    Amortization, TransformedAmortization
 }

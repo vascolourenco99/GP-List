@@ -1,16 +1,17 @@
 import { format } from 'date-fns';
-import { Amortization } from '../types/';
+import { Amortization as OriginalAmortization, TransformedAmortization } from '../types/';
 
-export function transformAmortizations(amortizations: Amortization[]): any[] {
+export function transformAmortizations(amortizations: OriginalAmortization[]): TransformedAmortization[] {
   return amortizations.map((amortization) => {
-    const { schedule_date, project_id, ...rest } = amortization;
+    const { schedule_date, project_id, state, amount } = amortization;
     const [date, time] = schedule_date.split(' ');
 
     return {
       day: format(new Date(date), 'dd MMM yy'),
       hour: time,
       project: project_id,
-      ...rest,
+      state: state,
+      amount: amount
     };
   });
 }

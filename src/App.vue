@@ -61,10 +61,14 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import TTable from "../src/components/TTable.vue";
 import ButtonSort from "../src/components/ButtonSort.vue";
 
-// functions
+// data/endpoints
 import { amortizations } from "./db/amortizations.ts";
+
+// functions
 import { transformAmortizations } from "./helpers";
-import { Amortization } from "./types";
+
+// types
+import { TransformedAmortization } from "./types";
 
 library.add(fas);
 
@@ -94,7 +98,7 @@ export default {
       }
     },
 
-    sortData(criteria: string, data: Array<Amortization>) {
+    sortData(criteria: string, data: TransformedAmortization[]) {
       return data.sort((a, b) => {
         if (criteria === "Date") {
           return new Date(a.day).getTime() - new Date(b.day).getTime();
