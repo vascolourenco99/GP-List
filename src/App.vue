@@ -13,18 +13,13 @@
           <div class="flex flex-col justify-center">
             <h3 class="font-h3 mr-2 text-center">Sort by:</h3>
           </div>
-          <button
+          <button-sort
             v-for="column in ['Date', 'State', 'ID', 'Amount']"
             :key="column"
-            class="button-sort px-4 py-2 mr-2 rounded"
-            @click="sort(column)"
-            :class="{
-              'active-button': activeButton === column,
-              noClick: activeButton === column,
-            }"
-          >
-            {{ column }}
-          </button>
+            :label="column"
+            :is-active="activeButton === column"
+            :handle-click="() => sort(column)"
+          />
           <button
             class="button-default mr-2 px-4 py-2 rounded"
             @click="sort('Default')"
@@ -64,6 +59,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 
 // component
 import TTable from "../src/components/TTable.vue";
+import ButtonSort from "../src/components/ButtonSort.vue";
 
 // functions
 import { amortizations } from "./db/amortizations.ts";
@@ -76,6 +72,7 @@ export default {
   components: {
     TTable,
     FontAwesomeIcon,
+    ButtonSort,
   },
   data() {
     return {

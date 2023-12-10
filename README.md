@@ -21,4 +21,5 @@ This project is a Vue.js application designed to provide a user-friendly interfa
 - https://devdocs.io/vue~3/
 - https://tailwindcss.com/docs/installation 
 - https://www.vue-tailwind.com/docs/table/ 
+- https://www.telerik.com/blogs/definecomponent-vue-3-pure-magic 
 
