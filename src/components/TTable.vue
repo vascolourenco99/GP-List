@@ -43,12 +43,6 @@
         </tr>
       </tbody>
     </table>
-    <t-pagination
-      :total-items="data.length"
-      :current-page="currentPage"
-      :items-per-page="itemsPerPage"
-      @page-change="handlePageChange"
-    />
     <div class="flex row justify-between t-4">
       <div>
         <button
@@ -59,7 +53,7 @@
             'text-deactivated-color': currentPage === 1,
           }"
           :disabled="currentPage === 1"
-          @click="prevPage"
+          @click="() => prevPage()"
         >
           Previous
         </button>
@@ -78,7 +72,7 @@
             'text-deactivated-color': currentPage === totalPages,
           }"
           :disabled="currentPage === totalPages"
-          @click="nextPage"
+          @click="() => nextPage()"
         >
           Next
         </button>
@@ -92,15 +86,15 @@ export default {
   props: {
     data: {
       type: Array,
-      default: () => [],
+      default: [],
     },
     headers: {
       type: Array,
-      default: () => [],
+      default: [],
     },
     itemsPerPage: {
       type: Number,
-      default: 10,
+      default: 3,
     },
   },
   data() {
@@ -124,11 +118,22 @@ export default {
         tfootTd: "",
       };
     },
+    /**
+     * function to determine the subset of data to display on the current page.
+     * Calculates the start and end indices based on the current page and items per page,
+     * then returns a sliced array containing the data for the current page.
+     */
     paginatedData() {
+      // starting index of the current page
       const start = (this.currentPage - 1) * this.itemsPerPage;
+      // ending index of the current page
       const end = start + this.itemsPerPage;
+      // return a slice of the current page
       return this.data.slice(start, end);
     },
+    /**
+     * funtion to get the total number of pages
+     */
     totalPages() {
       return Math.ceil(this.data.length / this.itemsPerPage);
     },
@@ -142,9 +147,6 @@ export default {
       } else {
         return "";
       }
-    },
-    handlePageChange(page: number) {
-      this.currentPage = page;
     },
     prevPage() {
       if (this.currentPage > 1) {

@@ -1,8 +1,8 @@
 <!--
   This component represents a sortable table with various data columns. 
   It includes functionality to sort the table based on
-  different criteria such as Date, State, Project ID, and Amount. 
-  Users can click on buttons to sort the table by specific criteria, 
+  different buttonName such as Date, State, Project ID, and Amount. 
+  Users can click on buttons to sort the table by specific buttonName, 
   and an additional option allows reversing the sorting order.
 -->
 <template>
@@ -22,7 +22,7 @@
           />
           <button
             class="button-default mr-2 px-4 py-2 rounded"
-            @click="sort('Default')"
+            @click="() => sort('Default')"
             :class="{ 'active-button': activeButton === 'Default' }"
           >
             None
@@ -31,8 +31,8 @@
             <div class="vl"></div>
           </div>
           <button
-            class="button-option px-4 py-2 ml-2 rounded"
-            @click="reverse('Active')"
+            class="button-reverse px-4 py-2 ml-2 rounded"
+            @click="() => reverse('Active')"
             :class="{
               'active-button': activeButtonReverse === 'Active',
               noClick: activeButton === 'Default',
@@ -86,27 +86,27 @@ export default {
     };
   },
   methods: {
-    sort(criteria: string) {
-      if (criteria === "Default") {
-        this.activeButton = criteria;
+    sort(buttonName: string) {
+      if (buttonName === "Default") {
+        this.activeButton = buttonName;
         this.activeButtonReverse = "";
         this.$data.tableData = transformAmortizations(amortizations);
       } else {
-        this.activeButton = criteria;
+        this.activeButton = buttonName;
         this.activeButtonReverse = "";
-        this.$data.tableData = this.sortData(criteria, this.$data.tableData);
+        this.$data.tableData = this.sortData(buttonName, this.$data.tableData);
       }
     },
 
-    sortData(criteria: string, data: TransformedAmortization[]) {
+    sortData(buttonName: string, data: TransformedAmortization[]) {
       return data.sort((a, b) => {
-        if (criteria === "Date") {
+        if (buttonName === "Date") {
           return new Date(a.day).getTime() - new Date(b.day).getTime();
-        } else if (criteria === "State") {
+        } else if (buttonName === "State") {
           return b.state.localeCompare(a.state);
-        } else if (criteria === "ID") {
+        } else if (buttonName === "ID") {
           return a.project - b.project;
-        } else if (criteria === "Amount") {
+        } else if (buttonName === "Amount") {
           return a.amount - b.amount;
         }
         return 0;
@@ -142,7 +142,7 @@ export default {
   height: 43px;
 }
 
-.button-option {
+.button-reverse {
   cursor: pointer;
   border: 1px solid #154b64;
   background-color: white;
@@ -170,13 +170,13 @@ export default {
 }
 
 .button-sort:hover,
-.button-option,
+.button-reverse,
 .button-default:hover {
   background-color: #f8f8f8;
 }
 
 .button-sort.active-button,
-.button-option.active-button,
+.button-reverse.active-button,
 .button-default.active-button,
 .button-default:active,
 .button-sort:active {
