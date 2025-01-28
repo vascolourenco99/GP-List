@@ -1,5 +1,7 @@
 # Amortization List
 
+Live Url https://gp-list-vasco.netlify.app/
+
 This project is a Vue.js application designed to provide a user-friendly interface for displaying and managing amortizations. The frontend utilizes Vue components, including `App.vue` for the main amortization list display and sorting. 
 minhoca 
 ## Project Structure
